@@ -31,12 +31,21 @@ public class CompanyController {
         return new ResponseEntity<>("Company updated successfully", HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "{/id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public ResponseEntity<String> DeleteCompany(@PathVariable Long id){
        boolean isDeleted = companyService.deletComanyById(id);
        if(isDeleted){
            return new ResponseEntity<>("Company deleted succesfully", HttpStatus.OK);
        }
        return new ResponseEntity<>("Company not found", HttpStatus.NOT_FOUND);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value= "/{id}")
+    public ResponseEntity<Company> getCompanyByid(@PathVariable ("id") Long id){
+        Company comp = companyService.getById(id);
+        if(comp != null){
+            return new ResponseEntity<>(comp, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
